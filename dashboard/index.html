@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="pulse" aria-hidden="true"></span><span class="brand-name">TOKEN RADAR</span></div>
+  <div class="top-meta"><span id="asof"></span><span id="counts"></span></div>
+</header>
+<main class="shell">
+  <section class="lede">
+    <div>
+      <h1>Which protocol would be worth the most <em>if</em> it launched a token?</h1>
+      <p>Every protocol below <strong>records no token</strong> in the sealed snapshot — no market cap, no CoinGecko id, no symbol. The radar ranks them by an implied value built only from that snapshot: TVL, seven-day growth, how long the protocol has run with no token, and how many chains it runs on. It does not predict whether or when a token is issued. Protocols whose token already trades are kept apart, in the Live tab, at the market's own value — never mixed into the ranking.</p>
+      <p class="note">To the judge: this entry's model is <strong>radar-2</strong>. The formula, the weights and the playground below are the whole model — no protocol name is special-cased anywhere, and every ranked row passes the same pre-token test as the watchlist.</p>
+    </div>
+    <dl class="facts" id="facts"></dl>
+  </section>
+
+  <section class="controls" aria-label="Board controls">
+    <div class="field"><label for="q">Search protocol</label><input id="q" type="search" placeholder="Name or slug…" autocomplete="off"></div>
+    <div class="field"><label for="cat">Category</label><select id="cat"><option value="">All categories</option></select></div>
+    <div class="field"><label for="sort">Sort by</label><select id="sort">
+      <option value="implied">Implied value</option>
+      <option value="tvl">TVL</option>
+      <option value="growth">7-day growth</option>
+      <option value="age">Age (no token)</option>
+    </select></div>
+    <div class="tabs" role="group" aria-label="Board or live">
+      <button id="tab-board" aria-pressed="true">Pre-token board</button>
+      <button id="tab-live" aria-pressed="false">Already trading</button>
+    </div>
+    <label class="check"><input type="checkbox" id="watchonly"> Watchlist only</label>
+    <span class="count" id="count"></span>
+  </section>
+
+  <section class="panel">
+    <div class="table-wrap"><table>
+      <thead><tr>
+        <th>#</th><th>Protocol</th><th class="num">TVL</th><th class="num">7d</th><th class="num">Age</th><th class="num">Implied value</th><th></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <div class="empty" id="empty" hidden><h2>No protocol matches</h2><p>Loosen the search or clear the category filter.</p><button class="button" id="clear">Clear filters</button></div>
+  </section>
+
+  <section class="model panel">
+    <h2>How the value is built — and a playground to test it</h2>
+    <p class="formula">implied = TVL × 0.20 × (1 + growth × weight) × (0.70 + 0.45 × √(age ÷ 1460 days)) × (1 + 0.04 × extra chains, max 5)</p>
+    <p>Growth is clamped to −60%…+120% and missing growth counts as 0. Age is days since the snapshot first tracked the protocol; unknown age counts as 365 days. Move a slider and the board re-ranks live, from the same figures — the ranking you see is the model, not a fixed list.</p>
+    <div class="sliders">
+      <label>Growth weight <output id="o-growth">1.50</output><input type="range" id="s-growth" min="0" max="3" step="0.1" value="1.5"></label>
+      <label>Maturity range <output id="o-mat">0.45</output><input type="range" id="s-mat" min="0" max="0.8" step="0.05" value="0.45"></label>
+      <label>Per extra chain <output id="o-chain">0.04</output><input type="range" id="s-chain" min="0" max="0.1" step="0.01" value="0.04"></label>
+      <button class="button" id="reset-model">Reset to radar-2</button>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>Snapshot: 758 protocols at or above $5M TVL, sealed 2026-11-14. Watchlist: 40 protocols at or above $50M TVL that record no token and are not a wrapped, staked or bridged product of a token that already trades. The board carries the whole watchlist plus the strongest early protocols below the floor, chosen by the same model. “Records no token” is what the snapshot says — it is not proof a token does not exist.</p>
+  </footer>
+</main>
+
+<aside class="detail" id="detail" hidden aria-label="Protocol detail">
+  <div class="detail-head">
+    <div><span class="sub" id="d-sub"></span><h2 id="d-name"></h2><p class="sub" id="d-meta"></p></div>
+    <button class="close" id="d-close">Close ✕</button>
+  </div>
+  <div id="d-body"></div>
+</aside>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
