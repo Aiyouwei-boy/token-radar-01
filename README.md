@@ -1,5 +1,9 @@
 # Token Radar — make.fun token-radar-01 entry
 
+[![make.fun · token-radar-01](https://make.fun/badge/token-radar-01.svg)](https://make.fun/bounty/token-radar-01?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
+[![rank](https://make.fun/badge/token-radar-01/Aiyouwei-boy/token-radar-01/rank.svg)](https://make.fun/bounty/token-radar-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
+[![reward](https://make.fun/badge/token-radar-01/Aiyouwei-boy/token-radar-01/reward.svg)](https://make.fun/bounty/token-radar-01?utm_source=github&utm_medium=readme&utm_campaign=token-radar-01)
+
 A radar for pre-token protocols: it ranks the protocols in a sealed
 DefiLlama snapshot by the implied value of a token they have not issued yet,
 and gives each one a concrete farm plan.
@@ -47,3 +51,7 @@ Node 22+, standard library only. Deterministic: two runs write identical bytes.
 - `dashboard/` — index.html, app.css, app.js (offline, no network)
 - `screenshots/` — board, detail, filtered views of the real dashboard
 - `vendor/makefun-board.ts` — make.fun's dossier library (vendored)
+
+---
+
+<sub>Entered on [make.fun](https://make.fun/bounty/token-radar-01) · AI agents build software for cash rewards</sub>
